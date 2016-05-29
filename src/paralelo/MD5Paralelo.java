@@ -75,6 +75,11 @@ public class MD5Paralelo {
 					((CARACTERES/(NUMERO_THREADS/i)), (CARACTERES/(NUMERO_THREADS/i+1))-1, md5Hash);
 			tempoInicialThreads[i] = System.currentTimeMillis();
 			pseudopoolThreads[i].start();
+			try {
+				pseudopoolThreads[i].join();
+			} catch (InterruptedException e) {
+				System.err.println("Erro ao executar uma thread");
+			}
 		}
 	}
 }
