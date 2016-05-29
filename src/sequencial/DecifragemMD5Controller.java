@@ -29,12 +29,7 @@ public class DecifragemMD5Controller {
 		
 		setHashMD5Compare(hash);
 
-		String[] caracteresAlfaNum = {"0", "1", "2", "3", "4", "5", "6", "7",
-				"8", "9", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", 
-				"k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v",
-				"w", "x", "y", "z"};
-
-		if (permutacao(caracteresAlfaNum, hash)) {
+		if (descobrePalavraCorrespondente(hash)) {
 			System.out.println("---------------------------------------------------");
 			System.out.println("\nPalavra descoberta!\n");
 			System.out.println("Hash: " + getHashMD5Compare());
@@ -43,8 +38,21 @@ public class DecifragemMD5Controller {
 
 	}
 
-	private boolean permutacao(String[] caracteresAlfaNum, String hash) throws NoSuchAlgorithmException {
+	/**
+	 * Método que faz "força-bruta" para descobrir qual palavra tem tal hash de
+	 * entrada. Ele faz isso permutando entre todos as palavras alfanuméricos 
+	 * (minúsculos) de 5 dígitos.
+	 * @param hash A hash a qual deseja descobrir a palavra que a originou.
+	 * @return true, caso o algoritmo encontra uma palavra que origina a mesma 
+	 * hash MD5 que a hash de entrada; false, caso contrário.
+	 * @throws NoSuchAlgorithmException
+	 */
+	private boolean descobrePalavraCorrespondente(String hash) throws NoSuchAlgorithmException {
 
+		String[] caracteresAlfaNum = {"0", "1", "2", "3", "4", "5", "6", "7",
+				"8", "9", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", 
+				"k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v",
+				"w", "x", "y", "z"};
 		boolean descobriu = false;
 
 		for (String a : caracteresAlfaNum) {
