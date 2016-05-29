@@ -4,7 +4,7 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class QuebraSenhaMD5 {
+public class DecifragemMD5Service {
 
 	public static boolean quebrarHashMD5(String combinacao, String hash) throws NoSuchAlgorithmException {
 

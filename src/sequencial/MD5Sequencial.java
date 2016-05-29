@@ -2,7 +2,7 @@ package sequencial;
 
 import java.security.NoSuchAlgorithmException;
 
-public class MD5 {
+public class MD5Sequencial {
 
 	public static void main(String[] args) throws Exception {
 
@@ -37,7 +37,7 @@ public class MD5 {
 	 */
 	private static long calculaQuebraMD5(String md5Hash) throws NoSuchAlgorithmException {
 
-		QuebraSenha objDecifrador = new QuebraSenha();
+		DecifragemMD5Controller objDecifrador = new DecifragemMD5Controller();
 		//---------------------------------------------------------------------
 		long T0 = System.currentTimeMillis(); // Tempo inicial (To)
 		

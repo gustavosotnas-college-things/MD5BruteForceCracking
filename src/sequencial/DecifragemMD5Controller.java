@@ -2,8 +2,8 @@ package sequencial;
 
 import java.security.NoSuchAlgorithmException;
 
-public class QuebraSenha {
-	
+public class DecifragemMD5Controller {
+
 	// Variáveis de classe
 	private String hashMD5Compare = "";
 	private String palavraDescobertaMD5 = "";
@@ -54,7 +54,7 @@ public class QuebraSenha {
 						for (String e : caracteresAlfaNum) {
 
 							String combinacao = a + b + c + d + e;
-						    descobriu = QuebraSenhaMD5.quebrarHashMD5(combinacao, hash);
+						    descobriu = DecifragemMD5Service.quebrarHashMD5(combinacao, hash);
 							
 							if(descobriu){
 								setPalavraDescobertaMD5(combinacao);
