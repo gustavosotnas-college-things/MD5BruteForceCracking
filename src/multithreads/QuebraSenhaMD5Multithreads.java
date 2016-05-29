@@ -13,10 +13,12 @@ public class QuebraSenhaMD5Multithreads {
 		boolean quebrado = false;
 		
 		if(quebra){
-			System.out.println("Hash MD5 quebrada !!\n");
+			System.out.println("\n\nHash MD5 quebrada !!\n");
 			System.out.println("Hash: " + senhaMD5);
 			System.out.println("Senha: " + combinacao);
 			quebrado = true;
+			MD5Multithreads.setFim(System.currentTimeMillis());
+			MD5Multithreads.calculaTempo();
 		}
 		
 		return quebrado;

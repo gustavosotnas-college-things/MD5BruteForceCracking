@@ -1,7 +1,14 @@
 package multithreads;
 
 public class MD5Multithreads {
+	
+	private static long inicio;
+	private static long fim;
 
+	public static void setFim(long tempofim){
+		fim = tempofim;
+	}
+	
 	public static void main(String[] args) {
 		
 		//String hash1 = "17a0a00212dde12b063af7dc22fdf02b";
@@ -13,7 +20,7 @@ public class MD5Multithreads {
 		QuebraSenhaMultithreads quebra3 = new QuebraSenhaMultithreads(18,26, hash3);
 		QuebraSenhaMultithreads quebra4 = new QuebraSenhaMultithreads(27,35, hash3);
 		
-		long inicio = System.currentTimeMillis();
+		inicio = System.currentTimeMillis();
 		Thread t1 = new Thread(quebra1);
 		Thread t2 = new Thread(quebra2);
 		Thread t3 = new Thread(quebra3);
@@ -35,8 +42,10 @@ public class MD5Multithreads {
 			
 			System.err.println("Erro ao executar Threads");
 		}
-		long fim = System.currentTimeMillis();
-		
+	}
+	
+	public static void calculaTempo(){
 		System.out.println("Tempo gasto: " + (fim-inicio)/1000 + " seg");
+		System.exit(0);
 	}
 }

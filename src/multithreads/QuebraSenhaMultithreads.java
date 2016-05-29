@@ -2,6 +2,7 @@ package multithreads;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.concurrent.ExecutionException;
 
 public class QuebraSenhaMultithreads implements Runnable {
@@ -27,6 +28,7 @@ public class QuebraSenhaMultithreads implements Runnable {
 
 	public void run() {
 
+		Collections.synchronizedCollection(new ArrayList<>());
 		ArrayList<String> completo = new ArrayList<>();
 
 		for (int i = 0; i < 10; i++) {
@@ -44,7 +46,7 @@ public class QuebraSenhaMultithreads implements Runnable {
 			} catch (NoSuchAlgorithmException e) {
 				e.printStackTrace();
 			} catch (ExecutionException a){
-				System.out.println("Thread parou");
+				//System.out.println("Thread parou");
 			}
 
 
@@ -64,7 +66,7 @@ public class QuebraSenhaMultithreads implements Runnable {
 							setQuebrado(quebra.crackingThreads(combinacao, hash));
 
 							if (getQuebrado()) {
-								throw new ExecutionException("Quebrou!", null);
+								return;
 							}
 						}
 					}
