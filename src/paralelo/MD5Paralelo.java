@@ -43,9 +43,12 @@ public class MD5Paralelo {
 
 		// Chamadas do algoritmo para cada hash MD5 sequencialmente
 		for (String md5Hash : md5Hashes) {
+			 // Tempo inicial (To)
+			tempoInicialThreads[counterExecucoes] = System.currentTimeMillis();
 			calculaQuebraMD5(md5Hash);
-		}
+		} // Fechou uma execução do algoritmo já com a var counterExecucoes sido ++ na thread
 
+		// Tempos de execução depois dos Tempos Finais (T) terem sido definidos
 		long[] temposDeExecucao = calculaTemposDeExecucao();
 
 		System.out.println("---------------------------------------------------");
@@ -80,9 +83,6 @@ public class MD5Paralelo {
 				pseudoPoolThreads[i] = new QuebraSenhaMultithreads
 						(0, (CARACTERES/(NUMERO_THREADS/(i+1)))-1, md5Hash);
 			} // Para evitar exception de divisão por Zero
-			
-			 // Tempo inicial (To)
-			tempoInicialThreads[i] = System.currentTimeMillis();
 
 			// Executa as threads
 			pseudoPoolThreads[i].start();
@@ -104,7 +104,7 @@ public class MD5Paralelo {
 
 		long[] temposDeExecucao = new long[md5Hashes.length];
 
-		for (int i=0; i<NUMERO_THREADS; i++) {
+		for (int i=0; i<md5Hashes.length; i++) {
 			temposDeExecucao[i] = (tempoFinalThreads[i] - tempoInicialThreads[i]) / 1000; // (em segundos)
 		}
 		return temposDeExecucao;		
