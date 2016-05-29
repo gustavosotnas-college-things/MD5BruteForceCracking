@@ -62,19 +62,23 @@ public class MD5Paralelo {
 	 * Executa o algoritmo de quebra de hash MD5 com um contador de tempo de execução.
 	 * 
 	 * @param md5Hash A hash para passar por decifragem.
-	 * @return O tempo de execução da função de cálculo de números primos.
 	 * @throws NoSuchAlgorithmException 
 	 */
 	private static void calculaQuebraMD5(String md5Hash) throws NoSuchAlgorithmException {
 		
 		QuebraSenhaMultithreads[] pseudopoolThreads = new QuebraSenhaMultithreads[NUMERO_THREADS];
 		
+		// Cria as threads, dividindo os CARACTERES igualmente entre elas
 		for (int i = 0; i<NUMERO_THREADS; i++)
 		{
 			pseudopoolThreads[i] = new QuebraSenhaMultithreads
 					((CARACTERES/(NUMERO_THREADS/i)), (CARACTERES/(NUMERO_THREADS/i+1))-1, md5Hash);
 			tempoInicialThreads[i] = System.currentTimeMillis();
+
+			// Executa as threads
 			pseudopoolThreads[i].start();
+
+			// Main espera as threads terminarem
 			try {
 				pseudopoolThreads[i].join();
 			} catch (InterruptedException e) {
