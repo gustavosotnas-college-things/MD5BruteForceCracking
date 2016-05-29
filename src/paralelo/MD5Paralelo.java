@@ -1,6 +1,6 @@
 package paralelo;
 
-public class MD5Multithreads {
+public class MD5Paralelo {
 
 	private static long inicio;
 	private static long fim;
