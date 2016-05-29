@@ -6,13 +6,13 @@ import java.security.NoSuchAlgorithmException;
 
 public class QuebraSenhaMD5Multithreads {
 
-	public boolean crackingThreads(String combinacao, String hash) throws NoSuchAlgorithmException{
+	public boolean crackingThreads(String combinacao, String hash) throws NoSuchAlgorithmException {
 
 		String senhaMD5 = criptografar(combinacao);
 		boolean quebra = comparar(senhaMD5, hash);
 		boolean quebrado = false;
-		
-		if(quebra){
+
+		if (quebra) {
 			System.out.println("\n\nHash MD5 quebrada !!\n");
 			System.out.println("Hash: " + senhaMD5);
 			System.out.println("Senha: " + combinacao);
@@ -20,11 +20,11 @@ public class QuebraSenhaMD5Multithreads {
 			MD5Multithreads.setFim(System.currentTimeMillis());
 			MD5Multithreads.calculaTempo();
 		}
-		
+
 		return quebrado;
 	}
 
-	private String criptografar(String senha) throws NoSuchAlgorithmException{
+	private String criptografar(String senha) throws NoSuchAlgorithmException {
 
 		String hashMD5 = "";
 		MessageDigest m = MessageDigest.getInstance("MD5");

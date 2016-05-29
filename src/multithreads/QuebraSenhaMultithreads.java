@@ -15,7 +15,7 @@ public class QuebraSenhaMultithreads implements Runnable {
 	synchronized static boolean getQuebrado() {
 		return quebrado;
 	}
-	
+
 	synchronized static void setQuebrado(boolean newquebrado) {
 		quebrado = newquebrado;
 	}
@@ -41,18 +41,18 @@ public class QuebraSenhaMultithreads implements Runnable {
 			completo.add(String.valueOf(x));
 		}
 
-			try {
-				permutacao(completo, this.hash, this.inicio, this.fim);
-			} catch (NoSuchAlgorithmException e) {
-				e.printStackTrace();
-			} catch (ExecutionException a){
-				//System.out.println("Thread parou");
-			}
-
+		try {
+			permutacao(completo, this.hash, this.inicio, this.fim);
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		} catch (ExecutionException a) {
+			// System.out.println("Thread parou");
+		}
 
 	}
 
-	private void permutacao(ArrayList<String> completo, String hash, int inicio, int fim) throws NoSuchAlgorithmException, ExecutionException{
+	private void permutacao(ArrayList<String> completo, String hash, int inicio, int fim)
+			throws NoSuchAlgorithmException, ExecutionException {
 
 		QuebraSenhaMD5Multithreads quebra = new QuebraSenhaMD5Multithreads();
 
