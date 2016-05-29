@@ -1,11 +1,33 @@
 package sequencial;
 
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 
 public class QuebraSenha {
+	
+	// Variáveis de classe
+	private String hashMD5Compare = "";
+	private String palavraDescobertaMD5 = "";
+	
+	// Getters e Setters
+	
+	public String getHashMD5Compare() {
+		return this.hashMD5Compare;
+	}
+	public void setHashMD5Compare(String newHashMD5Compare) {
+		this.hashMD5Compare = newHashMD5Compare;
+	}
+	public String getPalavraDescobertaMD5() {
+		return this.palavraDescobertaMD5;
+	}
+	public void setPalavraDescobertaMD5(String newPalavraDescobertaMD5) {
+		this.palavraDescobertaMD5 = newPalavraDescobertaMD5;
+	}
+
+	// Métodos
 
 	public void iniciaQuebra(String hash) throws NoSuchAlgorithmException {
+		
+		setHashMD5Compare(hash);
 
 		String[] caracteresAlfaNum = {"0", "1", "2", "3", "4", "5", "6", "7",
 				"8", "9", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", 
@@ -15,15 +37,14 @@ public class QuebraSenha {
 		if (permutacao(caracteresAlfaNum, hash)) {
 			System.out.println("---------------------------------------------------");
 			System.out.println("\nPalavra descoberta!\n");
-			System.out.println("Hash: " + hashMD5compare);
-			System.out.println("Senha: " + combinacao);
+			System.out.println("Hash: " + getHashMD5Compare());
+			System.out.println("Senha: " + getPalavraDescobertaMD5());
 		}
 
 	}
 
-	private void permutacao(String[] caracteresAlfaNum, String hash) throws NoSuchAlgorithmException {
+	private boolean permutacao(String[] caracteresAlfaNum, String hash) throws NoSuchAlgorithmException {
 
-		QuebraSenhaMD5 quebra = new QuebraSenhaMD5();
 		boolean descobriu = false;
 
 		for (String a : caracteresAlfaNum) {
@@ -33,9 +54,10 @@ public class QuebraSenha {
 						for (String e : caracteresAlfaNum) {
 
 							String combinacao = a + b + c + d + e;
-						    descobriu = quebra.Cracking(combinacao, hash);
+						    descobriu = QuebraSenhaMD5.quebrarHashMD5(combinacao, hash);
 							
 							if(descobriu){
+								setPalavraDescobertaMD5(combinacao);
 								return descobriu;
 							}
 						}
@@ -43,6 +65,6 @@ public class QuebraSenha {
 				}
 			}
 		}
-
+		return descobriu; // caso o for seja percorrido até o final
 	}
 }
