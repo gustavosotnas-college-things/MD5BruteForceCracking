@@ -1,5 +1,7 @@
 package sequencial;
 
+import java.security.NoSuchAlgorithmException;
+
 public class MD5 {
 
 	public static void main(String[] args) throws Exception {
@@ -31,8 +33,9 @@ public class MD5 {
 	 * 
 	 * @param md5Hash A hash para passar por decifragem.
 	 * @return O tempo de execução da função de cálculo de números primos.
+	 * @throws NoSuchAlgorithmException 
 	 */
-	private static long calculaQuebraMD5(String md5Hash) throws Exception {
+	private static long calculaQuebraMD5(String md5Hash) throws NoSuchAlgorithmException {
 
 		QuebraSenha objDecifrador = new QuebraSenha();
 		//---------------------------------------------------------------------

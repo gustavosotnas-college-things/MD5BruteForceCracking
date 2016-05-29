@@ -2,27 +2,24 @@ package sequencial;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class QuebraSenhaMD5 {
 
-	public boolean Cracking(String combinacao, String hash) throws Exception {
+	public boolean Cracking(String combinacao, String hash) throws NoSuchAlgorithmException {
 
 		String hashMD5compare = criptografar(combinacao);
 		boolean quebra = comparar(hashMD5compare, hash);
 		boolean quebrado = false;
 		
 		if(quebra) {
-			System.out.println("---------------------------------------------------");
-			System.out.println("\nPalavra descoberta!\n");
-			System.out.println("Hash: " + hashMD5compare);
-			System.out.println("Senha: " + combinacao);
 			quebrado = true;
 		}
 		
 		return quebrado;
 	}
 
-	private String criptografar(String senha) throws Exception {
+	private String criptografar(String senha) throws NoSuchAlgorithmException {
 
 		String hashMD5 = "";
 		MessageDigest m = MessageDigest.getInstance("MD5");
