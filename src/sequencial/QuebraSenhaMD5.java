@@ -6,7 +6,7 @@ import java.security.NoSuchAlgorithmException;
 
 public class QuebraSenhaMD5 {
 
-	public boolean Cracking(String combinacao, String hash) throws NoSuchAlgorithmException {
+	public static boolean quebrarHashMD5(String combinacao, String hash) throws NoSuchAlgorithmException {
 
 		String hashMD5compare = criptografar(combinacao);
 		boolean quebra = comparar(hashMD5compare, hash);
@@ -19,7 +19,7 @@ public class QuebraSenhaMD5 {
 		return quebrado;
 	}
 
-	private String criptografar(String senha) throws NoSuchAlgorithmException {
+	private static String criptografar(String senha) throws NoSuchAlgorithmException {
 
 		String hashMD5 = "";
 		MessageDigest m = MessageDigest.getInstance("MD5");
@@ -28,7 +28,7 @@ public class QuebraSenhaMD5 {
 		return hashMD5;
 	}
 
-	private boolean comparar(String hashTocompare, String originalMD5Hash) {
+	private static boolean comparar(String hashTocompare, String originalMD5Hash) {
 
 		if (hashTocompare.equals(originalMD5Hash)) {
 			return true;
