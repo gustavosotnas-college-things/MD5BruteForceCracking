@@ -54,7 +54,7 @@ public class DecifragemMD5Controller {
 						for (String e : caracteresAlfaNum) {
 
 							String combinacao = a + b + c + d + e;
-						    descobriu = DecifragemMD5Service.quebrarHashMD5(combinacao, hash);
+						    descobriu = DecifragemMD5Service.quebraHashMD5(combinacao, hash);
 							
 							if(descobriu){
 								setPalavraDescobertaMD5(combinacao);
