@@ -41,7 +41,7 @@ public class MD5Sequencial {
 		//---------------------------------------------------------------------
 		long T0 = System.currentTimeMillis(); // Tempo inicial (To)
 		
-		objDecifrador.iniciaQuebra(md5Hash);
+		objDecifrador.quebre(md5Hash);
 		
 		long T = System.currentTimeMillis(); // Tempo final (T)
 		//---------------------------------------------------------------------

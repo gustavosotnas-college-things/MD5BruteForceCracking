@@ -25,7 +25,13 @@ public class DecifragemMD5Controller {
 
 	// Métodos
 
-	public void iniciaQuebra(String hash) throws NoSuchAlgorithmException {
+	/**
+	 * Função que inicia o processo de "quebra" da hash MD5 que corresponde 
+	 * a alguma palavra de 5 dígitos composta por caracteres alfanuméricos.
+	 * @param hash A hash MD5 o qual deseja descobrir qual palavra a originou.
+	 * @throws NoSuchAlgorithmException
+	 */
+	public void quebre(String hash) throws NoSuchAlgorithmException {
 		
 		setHashMD5Compare(hash);
 
