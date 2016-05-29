@@ -15,22 +15,21 @@ public class MD5 {
 		hack1.iniciaQuebra(md5Hashes[0]);
 		long fim1 = System.currentTimeMillis();
 		
-		System.out.println("Tempo gasto: " + (fim1-inicio1)/1000 + " seg\n\n");
+		System.out.println("Tempo gasto: " + (fim1-inicio1)/1000 + "s\n\n");
 		
 		long inicio2 = System.currentTimeMillis();
 		QuebraSenha hack2 = new QuebraSenha();
 		hack2.iniciaQuebra(md5Hashes[1]);
 		long fim2 = System.currentTimeMillis();
 		
-		System.out.println("Tempo gasto: " + (fim2-inicio2)/1000 + " seg\n\n");
+		System.out.println("Tempo gasto: " + (fim2-inicio2)/1000 + "s\n\n");
 		
 		long inicio3 = System.currentTimeMillis();
 		QuebraSenha hack3 = new QuebraSenha();
 		hack3.iniciaQuebra(md5Hashes[2]);
 		long fim3 = System.currentTimeMillis();
 		
-		System.out.println("Tempo gasto: " + (fim3-inicio3)/1000 + " seg");
-		
+		System.out.println("Tempo gasto: " + (fim3-inicio3)/1000 + "s");
 
 	}
 }

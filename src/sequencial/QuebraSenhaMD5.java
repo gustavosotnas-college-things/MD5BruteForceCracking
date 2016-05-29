@@ -12,7 +12,7 @@ public class QuebraSenhaMD5 {
 		boolean quebrado = false;
 		
 		if(quebra){
-			System.err.println("Hash MD5 quebrada !!\n");
+			System.out.println("Hash MD5 quebrada!!\n");
 			System.out.println("Hash: " + senhaMD5);
 			System.out.println("Senha: " + combinacao);
 			quebrado = true;
