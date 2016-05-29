@@ -11,7 +11,7 @@ public class QuebraSenhaMD5 {
 		boolean quebra = comparar(hashMD5compare, hash);
 		boolean quebrado = false;
 		
-		if(quebra){
+		if(quebra) {
 			System.out.println("---------------------------------------------------");
 			System.out.println("\nPalavra descoberta!\n");
 			System.out.println("Hash: " + hashMD5compare);
@@ -28,16 +28,15 @@ public class QuebraSenhaMD5 {
 		MessageDigest m = MessageDigest.getInstance("MD5");
 		BigInteger hash = new BigInteger(1, m.digest(senha.getBytes()));
 		hashMD5 = hash.toString(16);
-
 		return hashMD5;
-
 	}
 
-	private boolean comparar(String hashcomparar, String hash) {
+	private boolean comparar(String hashTocompare, String originalMD5Hash) {
 
-		if (hashcomparar.equals(hash)) {
+		if (hashTocompare.equals(originalMD5Hash)) {
 			return true;
-		} else
+		} else {
 			return false;
+		}
 	}
 }

@@ -6,37 +6,30 @@ public class QuebraSenha {
 
 	public void iniciaQuebra(String hash) throws Exception {
 
-		ArrayList<String> completo = new ArrayList<>();
+		String[] caracteresAlfaNum = {"0", "1", "2", "3", "4", "5", "6", "7",
+				"8", "9", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", 
+				"k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v",
+				"w", "x", "y", "z"};
 
-		for (int i = 0; i < 10; i++) {
-
-			completo.add(Integer.toString(i));
-		}
-
-		for (char x = 'a'; x <= 'z'; x++) {
-
-			completo.add(String.valueOf(x));
-		}
-
-		permutacao(completo, hash);
+		permutacao(caracteresAlfaNum, hash);
 
 	}
 
-	private void permutacao(ArrayList<String> completo, String hash) throws Exception {
+	private void permutacao(String[] caracteresAlfaNum, String hash) throws Exception {
 
 		QuebraSenhaMD5 quebra = new QuebraSenhaMD5();
-		boolean quebrado = false;
-		
-		for (String a : completo) {
-			for (String b : completo) {
-				for (String c : completo) {
-					for (String d : completo) {
-						for (String e : completo) {
+		boolean descobriu = false;
+
+		for (String a : caracteresAlfaNum) {
+			for (String b : caracteresAlfaNum) {
+				for (String c : caracteresAlfaNum) {
+					for (String d : caracteresAlfaNum) {
+						for (String e : caracteresAlfaNum) {
 
 							String combinacao = a + b + c + d + e;
-						    quebrado = quebra.Cracking(combinacao, hash);
+						    descobriu = quebra.Cracking(combinacao, hash);
 							
-							if(quebrado){
+							if(descobriu){
 								return;
 							}
 						}
