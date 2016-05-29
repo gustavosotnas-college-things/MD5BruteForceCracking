@@ -1,4 +1,4 @@
-package multithreads;
+package paralelo;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;

@@ -1,4 +1,4 @@
-package multithreads;
+package paralelo;
 
 public class MD5Multithreads {
 

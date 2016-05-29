@@ -1,4 +1,4 @@
-package multithreads;
+package paralelo;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -21,8 +21,8 @@ public class QuebraSenhaMultithreads implements Runnable {
 	}
 
 	public QuebraSenhaMultithreads(int inicio, int fim, String hash) {
-		this.inicio = inicio; // inicio da posição do elemento no arraylist
-		this.fim = fim; // fim da posição do elemento no arraylist
+		this.inicio = inicio; // inicio da posiï¿½ï¿½o do elemento no arraylist
+		this.fim = fim; // fim da posiï¿½ï¿½o do elemento no arraylist
 		this.hash = hash;
 	}
 
