@@ -7,13 +7,14 @@ public class QuebraSenhaMD5 {
 
 	public boolean Cracking(String combinacao, String hash) throws Exception {
 
-		String senhaMD5 = criptografar(combinacao);
-		boolean quebra = comparar(senhaMD5, hash);
+		String hashMD5compare = criptografar(combinacao);
+		boolean quebra = comparar(hashMD5compare, hash);
 		boolean quebrado = false;
 		
 		if(quebra){
-			System.out.println("Hash MD5 quebrada!!\n");
-			System.out.println("Hash: " + senhaMD5);
+			System.out.println("---------------------------------------------------");
+			System.out.println("\nPalavra descoberta!\n");
+			System.out.println("Hash: " + hashMD5compare);
 			System.out.println("Senha: " + combinacao);
 			quebrado = true;
 		}
