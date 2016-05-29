@@ -71,9 +71,15 @@ public class MD5Paralelo {
 
 		for (int i = 0; i<NUMERO_THREADS; i++)
 		{
-			// Cria as threads, dividindo os CARACTERES igualmente entre elas
-			pseudoPoolThreads[i] = new QuebraSenhaMultithreads
-					((CARACTERES/(NUMERO_THREADS/i)), (CARACTERES/(NUMERO_THREADS/i+1))-1, md5Hash);
+			if (i != 0) {
+				// Cria as threads, dividindo os CARACTERES igualmente entre elas
+				pseudoPoolThreads[i] = new QuebraSenhaMultithreads
+						((CARACTERES/(NUMERO_THREADS/i)), (CARACTERES/(NUMERO_THREADS/(i+1)))-1, md5Hash);
+			}
+			else { // i == 0
+				pseudoPoolThreads[i] = new QuebraSenhaMultithreads
+						(0, (CARACTERES/(NUMERO_THREADS/(i+1)))-1, md5Hash);
+			} // Para evitar exception de divisão por Zero
 			
 			 // Tempo inicial (To)
 			tempoInicialThreads[i] = System.currentTimeMillis();
