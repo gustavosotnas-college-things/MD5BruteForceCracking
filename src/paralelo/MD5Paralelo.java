@@ -7,55 +7,47 @@ public class MD5Paralelo {
 	public final static int NUMERO_THREADS = 4;
 	public final static int CARACTERES = 36; // Alfanuméricos minúsculos
 
-	private static long[] tempoInicialThreads = new long[NUMERO_THREADS];
-	private static long[] tempoFinalThreads = new long[NUMERO_THREADS];
+	// "Entrada" do usuário
+	private final static String md5Hashes[] = {
+		"17a0a00212dde12b063af7dc22fdf02b",
+		"75abfe3020804dd73a2a6040da9df96c",
+		"c77aeec24015ad7e6e0b1db9d9deed68"
+	};
 
-	synchronized static long[] getTempoThreads() {
+	// Tempo inicial e final de execução de cada hash MD5, independentemente das threads
+	private static long[] tempoInicialThreads = new long[md5Hashes.length];
+	private static long[] tempoFinalThreads = new long[md5Hashes.length];
+
+	synchronized static long[] getTempoFinalThreads() {
 		return MD5Paralelo.tempoFinalThreads;
 	}
 
-	synchronized static void setTempoThread(long tempoThread, int index) {
+	synchronized static void setTempoFinalThread(long tempoThread, int index) {
 		MD5Paralelo.tempoFinalThreads[index] = tempoThread;
 	}
 
-	public static void main(String[] args) {
+	// MAIN
+	public static void main(String[] args) throws NoSuchAlgorithmException {
 
-		System.out.println("Algoritmo de Quebra de Hash MD5 (Sequencial)\n\nExecutando cálculos...");
+		System.out.println("Algoritmo de Quebra de Hash MD5 (Paralelo, "
+					+ NUMERO_THREADS + " threads)\n\nExecutando cálculos...");
 
-		final String md5Hashes[] = {
-			"17a0a00212dde12b063af7dc22fdf02b",
-			"75abfe3020804dd73a2a6040da9df96c",
-			"c77aeec24015ad7e6e0b1db9d9deed68"
-		};
-
-		QuebraSenhaMultithreads quebra1 = new QuebraSenhaMultithreads(0, 8, md5Hashes[2]);
-		QuebraSenhaMultithreads quebra2 = new QuebraSenhaMultithreads(9, 17, md5Hashes[2]);
-		QuebraSenhaMultithreads quebra3 = new QuebraSenhaMultithreads(18, 26, md5Hashes[2]);
-		QuebraSenhaMultithreads quebra4 = new QuebraSenhaMultithreads(27, 35, md5Hashes[2]);
-
-		//inicio = System.currentTimeMillis();
-
-		quebra1.start();
-		quebra2.start();
-		quebra3.start();
-		quebra4.start();
-
-		try {
-
-			quebra1.join();
-			quebra2.join();
-			quebra3.join();
-			quebra4.join();
-
-		} catch (Exception e) {
-
-			System.err.println("Erro ao executar Threads");
+		// Chamadas do algoritmo para cada hash MD5 sequencialmente
+		for (String md5Hash : md5Hashes) {
+			calculaQuebraMD5(md5Hash);
 		}
-	}
 
-	public static void calculaTempo() {
-		//System.out.println("Tempo gasto: " + (fim - inicio) / 1000 + " seg");
-		System.exit(0);
+		long[] temposDeExecucao = calculaTemposDeExecucao();
+
+		System.out.println("---------------------------------------------------");
+		System.out.println("RESULTADOS\n");
+		System.out.println("Tempo de execução do algoritmo de quebra de hash MD5:\n\n");
+		
+		for (int i=0; i<md5Hashes.length; i++) {
+			System.out.println("'" + md5Hashes[i] + "': " + temposDeExecucao[i] + " s");
+		}
+
+		System.exit(0); // Sai do programa fechando todas as threads
 	}
 
 	/**
@@ -65,25 +57,41 @@ public class MD5Paralelo {
 	 * @throws NoSuchAlgorithmException 
 	 */
 	private static void calculaQuebraMD5(String md5Hash) throws NoSuchAlgorithmException {
-		
-		QuebraSenhaMultithreads[] pseudopoolThreads = new QuebraSenhaMultithreads[NUMERO_THREADS];
-		
-		// Cria as threads, dividindo os CARACTERES igualmente entre elas
+
+		QuebraSenhaMultithreads[] pseudoPoolThreads = new QuebraSenhaMultithreads[NUMERO_THREADS];
+
 		for (int i = 0; i<NUMERO_THREADS; i++)
 		{
-			pseudopoolThreads[i] = new QuebraSenhaMultithreads
+			// Cria as threads, dividindo os CARACTERES igualmente entre elas
+			pseudoPoolThreads[i] = new QuebraSenhaMultithreads
 					((CARACTERES/(NUMERO_THREADS/i)), (CARACTERES/(NUMERO_THREADS/i+1))-1, md5Hash);
+			
+			 // Tempo inicial (To)
 			tempoInicialThreads[i] = System.currentTimeMillis();
 
 			// Executa as threads
-			pseudopoolThreads[i].start();
+			pseudoPoolThreads[i].start();
 
 			// Main espera as threads terminarem
 			try {
-				pseudopoolThreads[i].join();
+				pseudoPoolThreads[i].join();
 			} catch (InterruptedException e) {
 				System.err.println("Erro ao executar uma thread");
 			}
 		}
+	}
+	
+	/**
+	 * Calcula os tempos de execução do algoritmo de quebra de MD5 em segundos.
+	 * @return Uma "lista" com os tempos de execução para cada hash processada.
+	 */
+	private static long[] calculaTemposDeExecucao() {
+
+		long[] temposDeExecucao = new long[md5Hashes.length];
+
+		for (int i=0; i<NUMERO_THREADS; i++) {
+			temposDeExecucao[i] = (tempoFinalThreads[i] - tempoInicialThreads[i]) / 1000; // (em segundos)
+		}
+		return temposDeExecucao;		
 	}
 }
