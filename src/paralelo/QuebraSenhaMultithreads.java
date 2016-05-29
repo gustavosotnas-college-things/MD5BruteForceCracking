@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.concurrent.ExecutionException;
 
-public class QuebraSenhaMultithreads implements Runnable {
+public class QuebraSenhaMultithreads extends Thread {
 
 	private int inicio;
 	private int fim;
