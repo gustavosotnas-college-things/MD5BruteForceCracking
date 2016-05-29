@@ -17,8 +17,8 @@ public class QuebraSenhaMD5Multithreads {
 			System.out.println("Hash: " + senhaMD5);
 			System.out.println("Senha: " + combinacao);
 			quebrado = true;
-			//MD5Paralelo.setFim(System.currentTimeMillis());
-			MD5Paralelo.calculaTempo();
+			MD5Paralelo.setTempoFinalThread(System.currentTimeMillis(), MD5Paralelo.getCounterExecucoes());
+			MD5Paralelo.setCounterExecucoes(MD5Paralelo.getCounterExecucoes() + 1); // counterExecucoes++
 		}
 
 		return quebrado;
