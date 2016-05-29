@@ -65,7 +65,7 @@ public class MD5Paralelo {
 	 * @return O tempo de execução da função de cálculo de números primos.
 	 * @throws NoSuchAlgorithmException 
 	 */
-	private static long calculaQuebraMD5(String md5Hash) throws NoSuchAlgorithmException {
+	private static void calculaQuebraMD5(String md5Hash) throws NoSuchAlgorithmException {
 		
 		QuebraSenhaMultithreads[] pseudopoolThreads = new QuebraSenhaMultithreads[NUMERO_THREADS];
 		
