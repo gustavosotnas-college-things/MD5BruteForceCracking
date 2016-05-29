@@ -17,6 +17,7 @@ public class MD5Paralelo {
 	// Tempo inicial e final de execução de cada hash MD5, independentemente das threads
 	private static long[] tempoInicialThreads = new long[md5Hashes.length];
 	private static long[] tempoFinalThreads = new long[md5Hashes.length];
+	private static int counterExecucoes = 0; // Incrementará até md5Hashes.length 
 
 	synchronized static long[] getTempoFinalThreads() {
 		return MD5Paralelo.tempoFinalThreads;
@@ -24,6 +25,14 @@ public class MD5Paralelo {
 
 	synchronized static void setTempoFinalThread(long tempoThread, int index) {
 		MD5Paralelo.tempoFinalThreads[index] = tempoThread;
+	}
+	
+	synchronized static int getCounterExecucoes() {
+		return MD5Paralelo.counterExecucoes;
+	}
+	
+	synchronized static void setCounterExecucoes(int newCounterExecucoes) {
+		MD5Paralelo.counterExecucoes = newCounterExecucoes;
 	}
 
 	// MAIN
