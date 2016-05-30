@@ -20,9 +20,9 @@ public class QuebraSenhaMultithreads extends Thread {
 		quebrado = newquebrado;
 	}
 
-	public QuebraSenhaMultithreads(int inicio, int fim, String hash) {
-		this.inicio = inicio; // inicio da posi��o do elemento no arraylist
-		this.fim = fim; // fim da posi��o do elemento no arraylist
+	public QuebraSenhaMultithreads(int charInicio, int charFim, String hash) {
+		this.inicio = charInicio; // inicio da posi��o do elemento no arraylist
+		this.fim = charFim; // fim da posi��o do elemento no arraylist
 		this.hash = hash;
 	}
 
@@ -42,7 +42,7 @@ public class QuebraSenhaMultithreads extends Thread {
 		}
 
 		try {
-			permutacao(completo, this.hash, this.inicio, this.fim);
+			descobrePalavraCorrespondente(completo, this.hash, this.inicio, this.fim);
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		} catch (ExecutionException a) {
@@ -51,7 +51,7 @@ public class QuebraSenhaMultithreads extends Thread {
 
 	}
 
-	private void permutacao(ArrayList<String> completo, String hash, int inicio, int fim)
+	private void descobrePalavraCorrespondente(ArrayList<String> completo, String hash, int inicio, int fim)
 			throws NoSuchAlgorithmException, ExecutionException {
 
 		QuebraSenhaMD5Multithreads quebra = new QuebraSenhaMD5Multithreads();
