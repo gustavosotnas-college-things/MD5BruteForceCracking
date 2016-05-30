@@ -11,6 +11,7 @@ public class QuebraSenhaMultithreads extends Thread {
 	private int fim;
 	private String hash;
 	private static boolean quebrado = false;
+	private volatile Thread blinker = null; //Variável nula pra parar thread em stop()
 
 	synchronized static boolean getQuebrado() {
 		return quebrado;
@@ -28,6 +29,8 @@ public class QuebraSenhaMultithreads extends Thread {
 
 	public void run() {
 
+		// pega instância da thread atual para fazer parada preemptiva da thread
+		Thread thisThread = Thread.currentThread();
 		Collections.synchronizedCollection(new ArrayList<>());
 		ArrayList<String> completo = new ArrayList<>();
 
@@ -48,7 +51,7 @@ public class QuebraSenhaMultithreads extends Thread {
 		} catch (ExecutionException a) {
 			// System.out.println("Thread parou");
 		}
-
+		stopThread();
 	}
 
 	private void descobrePalavraCorrespondente(ArrayList<String> completo, String hash, int inicio, int fim)
@@ -76,4 +79,12 @@ public class QuebraSenhaMultithreads extends Thread {
 
 	}
 
+	/**
+	 * Interrompe a thread setando a variável flag 'blinker' como NULL
+	 * e na função run o while faz a função parar.
+	 */
+	public void stopThread() {
+        blinker = new Thread(this);
+        blinker.start();
+    }
 }
