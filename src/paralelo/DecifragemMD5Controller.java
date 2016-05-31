@@ -7,73 +7,95 @@ import java.util.concurrent.ExecutionException;
 
 public class DecifragemMD5Controller extends Thread {
 
+	// Variáveis de classe
+	private String hashMD5Compare = "";
+	private String palavraDescobertaMD5 = "";
 	private int inicio;
 	private int fim;
-	private String hash;
-	private static boolean quebrado = false;
+	public volatile boolean descobriu = false; // variável compartilhada
 
-	synchronized static boolean getQuebrado() {
-		return quebrado;
+	// Getters e Setters
+	
+	synchronized String getHashMD5Compare() {
+		return this.hashMD5Compare;
+	}
+	synchronized void setHashMD5Compare(String newHashMD5Compare) {
+		this.hashMD5Compare = newHashMD5Compare;
+	}
+	public String getPalavraDescobertaMD5() {
+		return this.palavraDescobertaMD5;
+	}
+	public void setPalavraDescobertaMD5(String newPalavraDescobertaMD5) {
+		this.palavraDescobertaMD5 = newPalavraDescobertaMD5;
 	}
 
-	synchronized static void setQuebrado(boolean newquebrado) {
-		quebrado = newquebrado;
-	}
-
+	// Construtor
 	public DecifragemMD5Controller(int charInicio, int charFim, String hash) {
-		this.inicio = charInicio; // inicio da posi��o do elemento no arraylist
-		this.fim = charFim; // fim da posi��o do elemento no arraylist
-		this.hash = hash;
+		// qual caractere entre os caracteres alfanuméricos 
+		// que será iniciada/terminada a verificação? inicio e fim
+		this.inicio = charInicio;
+		this.fim = charFim;
+		this.hashMD5Compare = hash;
 	}
 
+	/**
+	 * Função que inicia o processo de "quebra" da hash MD5 que corresponde 
+	 * a alguma palavra de 5 dígitos composta por caracteres alfanuméricos.
+	 */
 	public void run() {
 
-		Collections.synchronizedCollection(new ArrayList<>());
-		ArrayList<String> completo = new ArrayList<>();
-
-		for (int i = 0; i < 10; i++) {
-
-			completo.add(Integer.toString(i));
-		}
-
-		for (char x = 'a'; x <= 'z'; x++) {
-
-			completo.add(String.valueOf(x));
-		}
-
 		try {
-			descobrePalavraCorrespondente(completo, this.hash, this.inicio, this.fim);
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		} catch (ExecutionException a) {
-			// System.out.println("Thread parou");
-		}
+			if (descobrePalavraCorrespondente(this.hashMD5Compare, this.inicio, this.fim)) {
+
+				System.out.println("---------------------------------------------------");
+				System.out.println("\nPalavra descoberta!\n");
+				System.out.println("Hash: " + getHashMD5Compare());
+				System.out.println("Senha: " + getPalavraDescobertaMD5());
+			}
+		} catch (NoSuchAlgorithmException e) {e.printStackTrace();}
 
 	}
 
-	private void descobrePalavraCorrespondente(ArrayList<String> completo, String hash, int inicio, int fim)
-			throws NoSuchAlgorithmException, ExecutionException {
+	/**
+	 * Método que faz "força-bruta" para descobrir qual palavra tem tal hash de
+	 * entrada. Ele faz isso permutando entre todos as palavras alfanuméricos 
+	 * (minúsculos) de 5 dígitos.
+	 * @param hash A hash a qual deseja descobrir a palavra que a originou.
+	 * @param inicio Um número de 0 a 36 que marca qual char começa a fazer combinações.
+	 * @param fim Um número de 0 a 36 que marca qual char terminam as combinações.
+	 * @return true, se o algoritmo descobriu qual a palavra correspondente à hash,
+	 *         false, caso contrário.
+	 * @throws NoSuchAlgorithmException Quando a manipulação de MD5 dá problema.
+	 */
+	private boolean descobrePalavraCorrespondente(String hash, int inicio, int fim)
+			throws NoSuchAlgorithmException {
+		
+		String[] caracteresAlfaNum = {"0", "1", "2", "3", "4", "5", "6", "7",
+				"8", "9", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", 
+				"k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v",
+				"w", "x", "y", "z"};
 
 		DecifragemMD5Service quebra = new DecifragemMD5Service();
 
 		for (int a = inicio; a <= fim; a++) {
-			for (String b : completo) {
-				for (String c : completo) {
-					for (String d : completo) {
-						for (String e : completo) {
+			for (String b : caracteresAlfaNum) {
+				for (String c : caracteresAlfaNum) {
+					for (String d : caracteresAlfaNum) {
+						for (String e : caracteresAlfaNum) {
 
-							String combinacao = completo.get(a) + b + c + d + e;
-							setQuebrado(quebra.crackingThreads(combinacao, hash));
+							String combinacao = caracteresAlfaNum[a] + b + c + d + e;
+							descobriu = quebra.crackingThreads(combinacao, hash);
 
-							if (getQuebrado()) {
-								return;
+							if (descobriu) {
+								setPalavraDescobertaMD5(combinacao);
+								return descobriu;
 							}
 						}
 					}
 				}
 			}
 		}
-
+		return descobriu; // caso o for seja percorrido até o final; false
 	}
 
 }
