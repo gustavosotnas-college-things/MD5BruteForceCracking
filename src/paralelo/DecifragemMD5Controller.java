@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.concurrent.ExecutionException;
 
-public class QuebraSenhaMultithreads extends Thread {
+public class DecifragemMD5Controller extends Thread {
 
 	private int inicio;
 	private int fim;
@@ -20,7 +20,7 @@ public class QuebraSenhaMultithreads extends Thread {
 		quebrado = newquebrado;
 	}
 
-	public QuebraSenhaMultithreads(int charInicio, int charFim, String hash) {
+	public DecifragemMD5Controller(int charInicio, int charFim, String hash) {
 		this.inicio = charInicio; // inicio da posi��o do elemento no arraylist
 		this.fim = charFim; // fim da posi��o do elemento no arraylist
 		this.hash = hash;
@@ -54,7 +54,7 @@ public class QuebraSenhaMultithreads extends Thread {
 	private void descobrePalavraCorrespondente(ArrayList<String> completo, String hash, int inicio, int fim)
 			throws NoSuchAlgorithmException, ExecutionException {
 
-		QuebraSenhaMD5Multithreads quebra = new QuebraSenhaMD5Multithreads();
+		DecifragemMD5Service quebra = new DecifragemMD5Service();
 
 		for (int a = inicio; a <= fim; a++) {
 			for (String b : completo) {

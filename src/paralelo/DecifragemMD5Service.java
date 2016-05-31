@@ -4,7 +4,7 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class QuebraSenhaMD5Multithreads {
+public class DecifragemMD5Service {
 
 	public boolean crackingThreads(String combinacao, String hash) throws NoSuchAlgorithmException {
 

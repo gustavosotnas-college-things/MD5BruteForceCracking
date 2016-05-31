@@ -70,17 +70,17 @@ public class MD5Paralelo {
 	 */
 	private static void calculaQuebraMD5(String md5Hash) throws NoSuchAlgorithmException {
 
-		QuebraSenhaMultithreads[] pseudoPoolThreads = new QuebraSenhaMultithreads[NUMERO_THREADS];
+		DecifragemMD5Controller[] pseudoPoolThreads = new DecifragemMD5Controller[NUMERO_THREADS];
 
 		for (int i = 0; i<NUMERO_THREADS; i++)
 		{
 			if (i != 0) {
 				// Cria as threads, dividindo os CARACTERES igualmente entre elas
-				pseudoPoolThreads[i] = new QuebraSenhaMultithreads
+				pseudoPoolThreads[i] = new DecifragemMD5Controller
 						((CARACTERES/(NUMERO_THREADS/i)), (CARACTERES/(NUMERO_THREADS/(i+1)))-1, md5Hash);
 			}
 			else { // i == 0
-				pseudoPoolThreads[i] = new QuebraSenhaMultithreads
+				pseudoPoolThreads[i] = new DecifragemMD5Controller
 						(0, (CARACTERES/(NUMERO_THREADS/(i+1)))-1, md5Hash);
 			} // Para evitar exception de divisão por Zero
 
