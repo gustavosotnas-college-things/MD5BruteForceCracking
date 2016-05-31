@@ -51,6 +51,10 @@ public class DecifragemMD5Controller extends Thread {
 				System.out.println("\nPalavra descoberta!\n");
 				System.out.println("Hash: " + getHashMD5Compare());
 				System.out.println("Senha: " + getPalavraDescobertaMD5());
+
+				// Seta tempo final de execução da thread
+				MD5Paralelo.setTempoFinalThread(System.currentTimeMillis(), MD5Paralelo.getCounterExecucoes());
+				MD5Paralelo.setCounterExecucoes(MD5Paralelo.getCounterExecucoes() + 1); // counterExecucoes++
 			}
 		} catch (NoSuchAlgorithmException e) {e.printStackTrace();}
 
@@ -84,7 +88,7 @@ public class DecifragemMD5Controller extends Thread {
 						for (String e : caracteresAlfaNum) {
 
 							String combinacao = caracteresAlfaNum[a] + b + c + d + e;
-							descobriu = quebra.crackingThreads(combinacao, hash);
+							descobriu = DecifragemMD5Service.quebraHashMD5(combinacao, hash);
 
 							if (descobriu) {
 								setPalavraDescobertaMD5(combinacao);
