@@ -12,7 +12,7 @@ public class DecifragemMD5Controller extends Thread {
 	private String palavraDescobertaMD5 = "";
 	private int inicio;
 	private int fim;
-	public volatile boolean descobriu = false; // variável compartilhada
+	public static volatile boolean descobriu = false; // variável compartilhada
 
 	// Getters e Setters
 	
@@ -78,6 +78,7 @@ public class DecifragemMD5Controller extends Thread {
 				"8", "9", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", 
 				"k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v",
 				"w", "x", "y", "z"};
+		boolean euDescobri = false;
 
 		DecifragemMD5Service quebra = new DecifragemMD5Service();
 
@@ -88,15 +89,35 @@ public class DecifragemMD5Controller extends Thread {
 						for (String e : caracteresAlfaNum) {
 
 							String combinacao = caracteresAlfaNum[a] + b + c + d + e;
-							descobriu = DecifragemMD5Service.quebraHashMD5(combinacao, hash);
+							euDescobri = DecifragemMD5Service.quebraHashMD5(combinacao, hash);
+							descobriu = euDescobri;
 
 							if (descobriu) {
-								setPalavraDescobertaMD5(combinacao);
-								return descobriu;
+								if (euDescobri) {
+									setPalavraDescobertaMD5(combinacao);
+									return descobriu;
+								}
+								else // outra thread descobriu a palavra
+								{
+									Thread.currentThread().interrupt(); // mata thread
+								}
+								break; //fecha este for "e"
 							}
 						}
+						if (descobriu) {
+							break; //fecha este for "d"
+						}
+					}
+					if (descobriu) {
+						break; //fecha este for "c"
 					}
 				}
+				if (descobriu) {
+					break; //fecha este for "b"
+				}
+			}
+			if (descobriu) {
+				break; //fecha este for "a"
 			}
 		}
 		return descobriu; // caso o for seja percorrido até o final; false
